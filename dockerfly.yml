@@ -1,0 +1,24 @@
+version: "3"
+services:
+  dockerfly:
+    image: helyho/dockerfly
+    deploy:
+      mode: global
+      restart_policy:
+        condition: on-failure
+      resources:
+        limits:
+          cpus: "0.1"
+          memory: 50M
+    ports:
+      - "28083:28083"
+    networks:
+      - bg_web1
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+networks:
+  bg_web1:
+    driver: overlay
+    ipam:
+      config: 
+        - subnet: 10.17.5.0/24
